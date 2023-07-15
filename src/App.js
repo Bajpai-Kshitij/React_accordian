@@ -28,7 +28,7 @@ function Accordion() {
   const [isClicked, setIsClicked] = useState(null);
 
   function handleClick(index) {
-    setIsClicked(index);
+    setIsClicked(index === isClicked ? null : index);
   }
   return (
     <div className="accordion">
@@ -49,15 +49,13 @@ function Item({ item, click, onClickItem, index }) {
   const clickBool = click === index;
   return (
     <div
-      className={clickBool ? "content-box open" : "content-box"}
+      className={`item ${clickBool ? "open" : ""}`}
       onClick={() => onClickItem(index)}
     >
-      <ul className="item">
-        <li className="title">
-          <span className="number">{index + 1}</span> {item.title}
-        </li>
-        <li className="text">{clickBool ? item.text : ""}</li>
-      </ul>
+      <p className="number">{index <= 9 ? `0${index + 1}` : index + 1}</p>
+      <p className="title">{item.title}</p>
+      <p className="icon">{clickBool ? "-" : "+"}</p>
+      {clickBool && <div className="content-box text">{item.text}</div>}
     </div>
   );
 }
